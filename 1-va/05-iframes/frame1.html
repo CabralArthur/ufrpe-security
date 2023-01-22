@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div style="display: flex; flex-direction: column; gap: 8px; width: 400px;">
+        <textarea id="text-frame-1" cols="30" rows="10"></textarea>
+        <button id="button-frame-1">Button Frame 1</button>
+    </div>
+
+    <script>
+        const frames = window.parent.frames;
+        const frame1 = frames[0];
+        const frame2 = frames[1];
+
+        const buttonFrame1 = document.getElementById('button-frame-1');
+
+        buttonFrame1.addEventListener('click', () => {
+            const textAreaValue = document.getElementById('text-frame-1').value;
+
+            window.parent.postMessage(textAreaValue);
+        });
+
+        setTimeout(() => {
+            const buttonFrame2 = frame2.document.getElementById('button-2');
+
+            buttonFrame2.addEventListener('click', () => {
+                const textAreaValue = frame2.document.getElementById('text-frame-2').value;
+
+                window.parent.postMessage(textAreaValue);
+            });
+        }, 1)
+
+        window.parent.addEventListener('message', event => {
+
+            frame2.document.getElementById('text-frame-2').value = event.data;
+            window.document.getElementById('text-frame-1').value = event.data;
+        });
+    </script>
+</body> 
+</html>
