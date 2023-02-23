@@ -17,15 +17,15 @@
         const frame1 = frames[0];
         const frame2 = frames[1];
 
-        const buttonFrame1 = document.getElementById('button-frame-1');
-
-        buttonFrame1.addEventListener('click', () => {
-            const textAreaValue = document.getElementById('text-frame-1').value;
-
-            window.parent.postMessage(textAreaValue);
-        });
-
         setTimeout(() => {
+            const buttonFrame1 = document.getElementById('button-frame-1');
+
+            buttonFrame1.addEventListener('click', () => {
+                const textAreaValue = document.getElementById('text-frame-1').value;
+
+                window.parent.postMessage(textAreaValue);
+            });
+
             const buttonFrame2 = frame2.document.getElementById('button-2');
 
             buttonFrame2.addEventListener('click', () => {
@@ -33,12 +33,12 @@
 
                 window.parent.postMessage(textAreaValue);
             });
-        }, 1)
 
-        window.parent.addEventListener('message', event => {
-            frame2.document.getElementById('text-frame-2').value = event.data;
-            window.document.getElementById('text-frame-1').value = event.data;
-        });
+            window.parent.addEventListener('message', event => {
+                frame2.document.getElementById('text-frame-2').value = event.data;
+                window.document.getElementById('text-frame-1').value = event.data;
+            });
+        }, 100)
     </script>
 </body>
 </html>
